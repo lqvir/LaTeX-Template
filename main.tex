@@ -1,0 +1,179 @@
+\newif\ifsubmission
+
+% \submissiontrue
+\submissionfalse
+
+\ifsubmission
+\documentclass[journal]{IEEEtran}
+\usepackage[color,reflinks,secparam=\kappa]{crypto/crypto}
+\else
+\documentclass[11pt,letterpaper]{article}
+\usepackage[color,reflinks,secparam=\kappa]{crypto/crypto}
+\usepackage[margin=1in]{geometry}
+\fi
+\usepackage{amsmath,amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{claim}{Claim}
+\newtheorem{fact}{Fact}
+\newtheorem{definition}{Definition}
+\newtheorem{corollary}{Corollary}
+
+\usepackage{graphicx,multirow,array,enumitem,url,stmaryrd}
+\usepackage{braket,multicol,xspace,amsmath}
+\usepackage[noend]{algpseudocode}
+\usepackage{ulem}
+\usepackage{caption,subcaption}
+\usepackage{tikz}
+\usetikzlibrary{positioning,calc}
+\normalem
+\usepackage{ifthen}
+\usepackage{mdframed}
+\usepackage{tikz, pgfplots}
+
+% \usepackage{boondox-cal}
+\newcommand{\kang}[1]{{\color{blue} [Kang: #1]}}
+\newcommand{\LSB}{\ensuremath{{\sf lsb}}\xspace}
+\newcommand{\hash}{\ensuremath{{\sf H}}\xspace}
+\newcommand{\shortsection}[1]{\medskip\noindent{\bf #1}}
+\newcommand{\shortpart}[1]{\smallskip\noindent{\bf #1}}
+\newcommand{\ignore}[1]{}
+\newcommand{\abort}{\ensuremath{{\sf abort}}\xspace}
+\newcommand{\eval}{\ensuremath{{\sf GGM}'}\xspace}
+\newcommand{\feval}{\ensuremath{{\sf GGM}}\xspace}
+\newcommand{\etal}{et al.\@\xspace}
+
+
+% Begin Macros (Xiaojie Guo)
+\newcommand{\mytodo}[1]{{\color{red} [TODO, something could be wrong]: #1}}
+\newcommand{\red}[1]{{\color{red} #1}}
+\newcommand{\gray}[1]{{\color{gray} #1}}
+\newcommand{\green}[1]{\textcolor[rgb]{0.3,0.6,0.2}{#1}}
+
+%%%% reference macros
+\renewcommand{\refeqn}[1]{{\rm Eq.}~\eqref{#1}}
+
+%%%% party definitions
+\renewcommand{\Party}[1]{\ensuremath{P_{#1}}\xspace}
+
+\newcommand{\Client}{{\textsf{C}}}
+\newcommand{\PClient}{\Party{\Client}}
+\newcommand{\Server}{{\textsf{S}}}
+\newcommand{\PServer}{\Party{\Server}}
+
+\newcommand{\AidedServer}{{\textsf{A}}}
+\newcommand{\PAidedServer}{\Party{\AidedServer}}
+
+\newcommand{\alice}{{\textsf{A}}}
+\newcommand{\bob}{{\textsf{B}}}
+\newcommand{\parties}{\{ \alice, \bob \}}
+
+%%%% ideal functionality
+\newcommand{\sid}{\ensuremath{sid}}
+\newcommand{\command}[2][]{%
+	\ifthenelse{\equal{#1}{}}{\ensuremath{(\textsc{#2}, \sid)}\xspace}{\ensuremath{(\textsc{#2}, \sid, #1)}\xspace}%
+}
+\newcommand{\interface}[2][5pt]{\vskip#1\textbf{#2:}}
+
+%%%% general definitions
+\newcommand{\inlen}{{\textsf{in}}}
+\newcommand{\outlen}{{\textsf{out}}}
+
+\renewcommand{\eqdef}{\ensuremath{:=}\xspace}
+
+\newcommand{\hyb}[1]{\ensuremath{\textsf{Hyb}_{#1}}\xspace}
+
+\newcommand{\card}[1]{\ensuremath{\left| #1 \right|}\xspace}
+\newcommand{\prob}[1]{\ensuremath{{\rm Pr} \left[ #1 \right]}\xspace}
+\newcommand{\probcond}[2]{\ensuremath{\mathop{\rm Pr}\limits_{#1}\left[ #2 \right]}\xspace}
+\newcommand{\cond}{\ensuremath{\ |\ }\xspace}
+\newcommand{\Bigcond}{\ensuremath{\ \Big|\ }\xspace}
+\newcommand{\append}{\ensuremath{\,\|\,}\xspace}
+\newcommand{\logicAnd}{\ensuremath{\wedge}\xspace}
+\renewcommand{\mod}{\ensuremath{\ \mathbf{mod}\ }\xspace}
+
+%%%% hash functions
+\newcommand{\ccrname}{{\textsf{ccr}}}
+\newcommand{\ccrf}{H_\ccrname}
+\newcommand{\ccroracle}[2]{\mathcal{O}_{#1}^{\ccrname}(#2)}
+
+\newcommand{\ccrnqname}{{\textsf{ccr-nq}}}
+\newcommand{\ccrnqf}{\ensuremath{H_\ccrnqname}\xspace}
+\newcommand{\tccroracle}[2]{\mathcal{O}_{#1}^{\textsf{tccr}}(#2)}
+
+%%%% DPF definitions
+\newcommand{\round}[1]{, #1}
+\newcommand{\seed}[2]{s_{#1\round{#2}}}
+\newcommand{\tracebit}[2]{t_{#1\round{#2}}}
+\newcommand{\first}[2]{{\textsf{high}}_{#1\round{#2}}}
+\newcommand{\second}[2]{\textsf{low}_{#1\round{#2}}}
+\newcommand{\final}[2]{W_{#1\round{#2}}}
+\newcommand{\CW}[1]{\textsf{CW}_{#1}}
+\newcommand{\HCW}{\textsf{HCW}}
+\newcommand{\LCW}{\textsf{LCW}}
+
+\newcommand{\conv}[1]{\ensuremath{\textsf{Conv}_{#1}}\xspace}
+
+\newcommand{\ineval}[1]{\green{{#1}^{\bullet}}}
+
+
+%%%% new environments
+\newenvironment{nfalgo}{%
+	\small
+	\begin{framed}
+		\begin{minipage}{\linewidth}
+			\vspace{0pt}
+		}{%
+			\vspace{-3pt}
+		\end{minipage}
+	\end{framed}
+	\vspace{-5pt}
+}
+
+
+
+
+% End Macros
+
+
+\setlist[itemize]{leftmargin=*}
+\setlist[enumerate]{leftmargin=*}
+
+\newcommand{\mytitle}{Latex Template from Cryptobit and Cryptosty}
+\title{\Large\textbf{\mytitle}\\
+}
+
+\pagestyle{empty}
+
+\begin{document}
+\maketitle
+
+% \input{abstract}
+% \input{intro}
+% \input{pre}
+% \input{overview}
+% %\input{kv-pbc}
+% \input{psi}
+% \input{dpf}
+% \input{eval}
+% \input{intro}
+% \input{pre}
+% \input{sec}
+% \input{impl}
+% \input{perf}
+% \input{end}
+
+%
+\ifsubmission
+\bibliographystyle{IEEEtranS}
+\else
+\bibliographystyle{alpha}
+\fi
+\bibliography{cryptobib/abbrev2,cryptobib/crypto}
+
+%
+% \appendix
+% \input{appendix/dpf_correlation}
+
+%
+\end{document}
