@@ -1,4 +1,4 @@
-# Latex Template for cryptography conferences and journals
+# Latex Template for Crypto
 
 A latex template for cryptography conferences and journals includes cryptography bibTeX database [CryptoBib](https://cryptobib.di.ens.fr/). 
 This template contains a style file, `crypto.sty`, for crypto papers written by Alex J. Malozemoff (amaloz@cs.umd.edu) [crypto-latex](https://github.com/amaloz/crypto-latex). 
