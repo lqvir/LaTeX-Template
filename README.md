@@ -7,5 +7,5 @@ The `crypto.sty` has been modified and improved by multiple users. We would like
 
 ## How to use
 ```
-git -recursive clone https://github.com/lqvir/LaTeX-Template.git
+ git clone --recursive https://github.com/lqvir/LaTeX-Template.git [ProjectName]
 ```
