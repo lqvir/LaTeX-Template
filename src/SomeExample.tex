@@ -1,0 +1,23 @@
+\begin{algorithm}
+    \caption{Our new PVUnpack}
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+    \SetKwProg{Procedure}{Procedure}{}{}
+    \Procedure{OExpand{ct}}{
+        $\text{res} \gets [\text{ct}]$\;
+        \For{$i \gets 0$ \KwTo $\log D$}{
+            \For{$j \gets 0$ \KwTo $2^i - 1$}{
+                $\text{tmp}_0 \gets \text{res}[j]$\;
+                $\text{tmp}_1 \gets \text{tmp}_0 \cdot x^{-2^i}$\;
+                $\text{tmp}_j \gets \text{tmp}_0 + \text{Substitute}(\text{tmp}_0, D/2^i + 1)$\;
+                $\text{tmp}_{t+2^j} \gets \text{tmp}_1 + \text{Substitute}(\text{tmp}_1, D/2^i + 1)$\;
+                $\text{res} \gets [\text{tmp}_0, \dots, \text{tmp}_{2^{i+1}-1}]$\;
+            }
+        }
+        \For{$i \gets 0$ \KwTo $D$}{
+            $\text{res}[i] \gets \text{BFV.Eval}(\text{res}[i], 1/D, \times)$\;
+        }
+        \Return{res}\;
+    }
+    \end{algorithm}
+\subsection{Windows}
