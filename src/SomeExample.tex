@@ -1,23 +1,71 @@
-\begin{algorithm}
-    \caption{Our new PVUnpack}
-    \SetKwInOut{Input}{Input}
-    \SetKwInOut{Output}{Output}
-    \SetKwProg{Procedure}{Procedure}{}{}
-    \Procedure{OExpand{ct}}{
-        $\text{res} \gets [\text{ct}]$\;
-        \For{$i \gets 0$ \KwTo $\log D$}{
-            \For{$j \gets 0$ \KwTo $2^i - 1$}{
-                $\text{tmp}_0 \gets \text{res}[j]$\;
-                $\text{tmp}_1 \gets \text{tmp}_0 \cdot x^{-2^i}$\;
-                $\text{tmp}_j \gets \text{tmp}_0 + \text{Substitute}(\text{tmp}_0, D/2^i + 1)$\;
-                $\text{tmp}_{t+2^j} \gets \text{tmp}_1 + \text{Substitute}(\text{tmp}_1, D/2^i + 1)$\;
-                $\text{res} \gets [\text{tmp}_0, \dots, \text{tmp}_{2^{i+1}-1}]$\;
-            }
-        }
-        \For{$i \gets 0$ \KwTo $D$}{
-            $\text{res}[i] \gets \text{BFV.Eval}(\text{res}[i], 1/D, \times)$\;
-        }
-        \Return{res}\;
-    }
-    \end{algorithm}
-\subsection{Windows}
+\newpage
+\section{Algorithm}
+
+\label{app:alg}
+\begin{algorithm}[!t]
+\caption{$GenActive$}\label{alg:cap}
+\begin{algorithmic}[1]
+\Procedure{$Split$}{$x$}
+\State $l = \log(2\delta) = \log(\delta)+1$
+\State \Return $\{0,1\}^{(u-l)\times dim}, \{0,1\}^{l \times dim}$
+\EndProcedure
+\Procedure{$\mathsf{GenActive}$}{$x$}
+\Comment{The sender generates the active blocks for $x \in \{0,1\}^{u\times dim}$.}
+\State $x_H||x_L \gets Split(x)$
+\State $\mathsf{Active} \gets \{x_H\}$
+\For{$i = 0$ to $dim$}
+\State $\mathsf{tmpSet} \gets \phi$
+\If{$x_L[i] > \delta$}
+   \For{$\mathsf{a} \in  \mathsf{Active}$}
+        \State $\mathsf{tmp} \gets \mathsf{a}$
+        \State $\mathsf{tmp[i]} \gets  \mathsf{tmp[i]} +1$
+        \State $\mathsf{tmpSet} \gets \mathsf{tmpSet} \cup \{\mathsf{tmp}\}$
+   \EndFor
+\Else 
+     \For{$\mathsf{a} \in  \mathsf{Active}$}
+            \State $\mathsf{tmp} \gets \mathsf{a}$
+            \State $\mathsf{tmp[i]} \gets  \mathsf{tmp[i]} -1$
+            \State $\mathsf{tmpSet} \gets \mathsf{tmpSet} \cup \{\mathsf{tmp}\}$
+       \EndFor
+\EndIf
+\State $\mathsf{Active} \gets \mathsf{Active} \cup \mathsf{tmpSet}$
+\EndFor
+
+\State \Return $\mathsf{Active}$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\section{Tables Example}
+
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
+% Beamer presentation requires \usepackage{colortbl} instead of \usepackage[table,xcdraw]{xcolor}
+\begin{table}[!t]
+\caption{Experiment result of $\ours$ where the dimension  and the distance threshold $\delta = 32$ in LAN network.}
+\label{tab:balanced_comp}
+\centering
+% \resizebox{\columnwidth}{!}{%
+\begin{tabular}{cccc}
+\toprule
+$N_X = N_Y$             & Prot.   & Comm. (MB)                            & Comp. (s)                              \\ \midrule
+    \multirow{4}{*}{$2^8$}              & Prot1      & 23.07                                 & 7.20                                 \\ \cmidrule{2-4} 
+                                        & Prot2      & 13.46                                 & 11.67                               \\ \cmidrule{2-4} 
+                                        & Prot3 & {\color[HTML]{3531FF} \textbf{4.38}}  &  1.74\\ \cmidrule{2-4} 
+  & Prot4   & 4.40                                  &   {\color[HTML]{3531FF} \textbf{1.47 }}                              \\ \midrule
+   \multirow{4}{*}{$2^{10}$}            & Prot1      & 92.27                                 & 29.13                                \\ \cmidrule{2-4} 
+                                        & Prot2      & 53.82                                 & 46.27                                \\ \cmidrule{2-4} 
+                                        & Prot3 & {\color[HTML]{3531FF} \textbf{7.90}}  & 2.00                               \\ \cmidrule{2-4} 
+ & Prot4   & 8.03                                 & {\color[HTML]{3531FF} \textbf{1.96}} \\ \midrule
+\multirow{4}{*}{$2^{12}$}            & Prot1      & 369.07                                & 118.16                               \\ \cmidrule{2-4} 
+                                        & Prot2     & 215.28                                & 184.78                               \\ \cmidrule{2-4} 
+                                        & Prot3 & {\color[HTML]{3531FF} \textbf{23.01}} &              {\color[HTML]{3531FF} \textbf{4.34}}                   \\ \cmidrule{2-4} 
+ & Prot4   & 23.54                                 & 4.50  \\ \bottomrule
+\end{tabular}%
+% }
+
+\end{table}

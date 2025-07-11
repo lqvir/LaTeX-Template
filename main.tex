@@ -30,8 +30,10 @@
 \usepackage{ifthen}
 \usepackage{mdframed}
 \usepackage{tikz, pgfplots}
-\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+% \usepackage[ruled,vlined,linesnumbered]{algorithm2e}
 \usepackage{algpseudocode}
+
+\usepackage{algorithm}
 % \usepackage{boondox-cal}
 \newcommand{\kang}[1]{{\color{blue} [Kang: #1]}}
 \newcommand{\LSB}{\ensuremath{{\sf lsb}}\xspace}
@@ -117,6 +119,9 @@
 
 \newcommand{\ineval}[1]{\green{{#1}^{\bullet}}}
 
+\newcommand{\ours}{\textsf{OursProtName}}
+
+
 
 %%%% new environments
 \newenvironment{nfalgo}{%
@@ -144,13 +149,13 @@
 \title{\Large\textbf{\mytitle}\\
 }
 
-\pagestyle{empty}
+\pagestyle{plain}
 
 \begin{document}
 \maketitle
 
 \input{src/1-intro}
-% \input{src/2-example}
+% \input{src/SomeExample}
 
 %
 \ifsubmission
