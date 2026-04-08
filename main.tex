@@ -18,6 +18,17 @@
 \newtheorem{fact}{Fact}
 \newtheorem{definition}{Definition}
 \newtheorem{corollary}{Corollary}
+% `crypto.sty` uses \XXX for \mathcal X, while `dtrt.sty` uses \XXX for notes.
+% Preserve the math macro and avoid the package name clash locally.
+\let\CryptoMathXXX\XXX
+\makeatletter
+\let\XXX\@undefined
+\makeatother
+\usepackage{crypto/dtrt}
+\let\XXX\CryptoMathXXX
+
+\definecolor{lightblue}{rgb}{0.4, 0.6, 0.8}  % Light blue color definition
+\newcommand{\mynote}[1]{\dtcolornote[Qi Liu]{lightblue}{#1}}
 
 \usepackage{graphicx,multirow,array,enumitem,url,stmaryrd}
 \usepackage{braket,multicol,xspace,amsmath}
@@ -146,8 +157,9 @@
 \setlist[enumerate]{leftmargin=*}
 
 \newcommand{\mytitle}{Latex Template from CryptoBib and Cryptosty}
-\title{\Large\textbf{\mytitle}\\
-}
+\title{\Large\textbf{\mytitle}}
+\author{}
+\pgfplotsset{compat=1.18}
 
 \pagestyle{plain}
 
